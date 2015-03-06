@@ -1,10 +1,50 @@
 <ion-view view-title='Money Manager'>
   <ion-content class="padding">
     <div class="list">
-	  <a class="item item-icon-left" href="#/tab/change_pass">
-	    <i class="icon ion-lock-combination"></i>
-	    	Change Key
-	  </a>
+	    <div class="item item-divider">
+    		PIN
+  	    </div>
+		<a class="item item-icon-right" href="#/tab/change_pass">
+	    	<i class="icon ion-ios-locked color_positive"></i>
+	    		Change Key
+	  	</a>
+	  	<div class="item item-divider">
+    		Accounts
+  	    </div>
+	  	<a class="item item-icon-right" href="#/tab/add_account">
+	    	<i class="icon ion-ios-plus color_positive"></i>
+	    		Create
+	  	</a>
+	  	<a class="item item-icon-right" href="#/tab/delete_account">
+	    	<i class="icon ion-android-remove-circle color_positive"></i>
+	    		Delete
+	  	</a>
+	  	<a class="item item-icon-right" href="#/tab/recover_accounts">
+	    	<i class="icon ion-ios-trash color_positive"></i>
+	    		Recover
+	  	</a>
+	  	<div class="item item-divider">
+    		Catagorie
+  	    </div>
+  	    <a class="item item-icon-right" ng-click="add_cat()">
+	    	<i class="icon ion-ios-plus color_positive"></i>
+	    		Create
+	  	</a>
+	  	<a class="item item-icon-right" href="#/tab/delete_cat">
+	    	<i class="icon ion-android-remove-circle color_positive"></i>
+	    		Delete
+	  	</a>
+	  	<a class="item item-icon-right" href="#/tab/view_cat">
+	    	<i class="icon ion-eye color_positive"></i>
+	    		View
+	  	</a>
+	  	<div class="item item-divider">
+    		Tutorial
+  	    </div>
+  	    <a class="item item-icon-right" href="#/tab/tut">
+	    	<i class="icon ion-ios-albums color_positive"></i>
+	    		Slide Show
+	  	</a>
 	</div>
   </ion-content>
 </ion-view>

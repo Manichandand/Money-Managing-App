@@ -1,16 +1,22 @@
 <ion-view view-title='Change PIN'>
   <ion-content>
   	<div class="list list-inset">
-  <label class="item item-input">
-    <input type="text" placeholder="Old PIN">
-  </label>
-  <label class="item item-input">
-    <input type="text" placeholder="New PIN">
-  </label>
-  <div class="row">
-  	<button class="col col-33 col-offset-67 button button-positive icon ion-edit"></button>
-  </div>
-</div>
+        <div class="item item-divider">
+            Old Pin
+        </div>
+        <label class="item item-input">
+          <input type="text" placeholder="Old PIN" id="old_pin">
+        </label>
+        <div class="item item-divider">
+              New Pin
+        </div>
+        <label class="item item-input">
+          <input type="text" placeholder="New PIN" id="new_pin">
+        </label>
+        <div class="row">
+        	<button class="col col-33 col-offset-67 button button-positive icon ion-edit" ng-click="change_pass()"></button>
+        </div>
+    </div>
   
   </ion-content>
  </ion-view>

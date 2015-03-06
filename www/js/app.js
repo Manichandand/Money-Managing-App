@@ -5,16 +5,28 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var db;
-var myvalue = true;
-var example = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var db = null;
+var pin_now = "";
+var example = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$cordovaSQLite) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    db = $cordovaSQLite.openDB("mm.db");
-    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
+    db = $cordovaSQLite.openDB({name : "my_mm.db"});
+    //alert(db);
+    $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS PIN (pid integer primary key,pin text)");
+    $cordovaSQLite.execute(db,"SELECT * FROM PIN").then(function(res){
+        //alert(res.rows.length);
+        if(angular.equals(res.rows.length,0)){
+            var query = "INSERT INTO PIN (pid,pin) VALUES (?,?)";
+            $cordovaSQLite.execute(db,query,[1,"1234"]);
+        }
+    });
+    /*$cordovaSQLite.execute(db,"SELECT * FROM PIN").then(function(res){
+          pin_now = res.rows.item(0).pin;
+    });*/
+    //alert(pin_now);
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
@@ -22,6 +34,7 @@ var example = angular.module('starter', ['ionic', 'starter.controllers', 'starte
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
 })
 
@@ -88,7 +101,62 @@ var example = angular.module('starter', ['ionic', 'starter.controllers', 'starte
           controller: 'changePassCtrl'
         }
       }
+    })
+  .state('tab.delete_account', {
+      url: '/delete_account',
+      views: {
+        'tab-friends':{
+          templateUrl: 'templates/delete_account.html',
+          controller: 'deleteAccountCtrl'
+        }
+      }
+    })
+  .state('tab.recover_accounts', {
+      url: '/recover_accounts',
+      views: {
+        'tab-friends':{
+          templateUrl: 'templates/recover_accounts.html',
+          controller: 'recoverAccountCtrl'
+        }
+      }
+    })
+  .state('tab.delete_cat', {
+      url: '/delete_cat',
+      views: {
+        'tab-friends':{
+          templateUrl: 'templates/delete_cat.html',
+          controller: 'deleteCatCtrl'
+        }
+      }
+    })
+  .state('tab.view_cat', {
+      url: '/view_cat',
+      views: {
+        'tab-friends':{
+          templateUrl: 'templates/view_cat.html',
+          controller: 'viewCatCtrl'
+        }
+      }
+    })
+  .state('tab.tut', {
+      url: '/tut',
+      views: {
+        'tab-friends':{
+          templateUrl: 'templates/tut.html',
+          controller: 'tutCtrl'
+        }
+      }
+    })
+  .state('tab.add_account', {
+      url: '/add_account',
+      views: {
+        'tab-friends':{
+          templateUrl: 'templates/add_account.html',
+          controller: 'addAccountCtrl'
+        }
+      }
     });
+  
   
   
   // if none of the above states are matched, use this as the fallback
