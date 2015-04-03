@@ -1,5 +1,27 @@
-<ion-view view-title='View Catagorie'>
-  <ion-content>
-  	<h3>View Catagories</h3>
+<ion-view view-title='View Catagory'>
+  <ion-content class="padding" style="background-color:#E0E0E0">
+  	<!--h3>View Catagories</h3-->
+  	<!--ul class="list">
+	    <li class="item" ng-repeat="cat in catagories">{{cat.name}}
+	    </li>
+	</ul-->
+	<!--ion-list>
+
+        <ion-item ng-repeat="cat in catagories" class="item-remove-animate"on-swipe-left="delete_cat(cat.name,$index)" animation="slide-left-right"-->
+          {{cat.name}}
+          <!--ion-option-button class="button-assertive icon ion-android-delete"
+          			on-swipe-left="delete_cat(cat.name,$index)">
+          </ion-option-button-->
+        <!--/ion-item>
+
+      </ion-list-->
+      <div style="border:1px solid #E0E0E0;border-radius:5px;margin-top:2px;height:46px;margin-bottom:5px;background-color:#ffffff" ng-repeat="cat in catagories">
+</button>
+       <div style="width:30px;height:30px;background-color:{{cat.bg}};margin-top:8px;margin-left:8px;margin-bottom:8px;margin-right:8px;color:white;text-align:center;font-size:24px;display:block;vertical-align:middle;line-height: 30px;">{{cat.name[0]}}</div>
+       <h5 style="position:relative;top:-70px;padding-left:98px;padding-top:35px;">{{cat.name}}</h5>
+       <!--h6 style="position:relative;padding-left:98px;top:-80px;color:#707070;">Acc Number : {{acc.ac_number}}</h6>
+       <h6 style="position:relative;padding-left:98px;top:-90px;color:#909090;">Acc Balance : {{acc.balance}}</h6-->
+    </div>
   </ion-content>
 </ion-view>
+<!--delete_cat(cat.name) -->

@@ -1,17 +1,68 @@
+<style>
+	.my_button{
+	font-size:32px;
+	border-width:0px;
+	text-align: center;
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+}
+</style>
 <ion-view view-title='Money Manager'>
-  <ion-content>
-  <!--ion-view hide-nav-bar="true"-->
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+  <ion-content scroll="false">
+  <!--label class="item item-input">
+    <input type="text" placeholder="First Name">
+  </label-->
+  <div class="list list-inset">
+	  <label class="item item-input bottom_border input_text">
+	    <input type="text" style="border-width:0px;color:#4a87ee;font-size:32px;text-align:right;padding-right:0px;margin-top:-20px" id="input_string">
+	  </label>
+	</div>
+	
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
+	<div class="button-bar row">
+	  <a  id="button_c" class="button button-calm my_button" style="border-width:0px;border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="clear_str()"><p>c</p></a>
+	  <a  id="button_+-" class="button button-royal my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="add_plus_minus()"><p>+/-</p></a>
+	  <a  id="button_%" class="button button-assertive my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="store_ans()"><p>Ans</p></a>
+	  <a class="button button-balanced my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" id="button_back" ng-click="remove_last()"><p class="icon ion-backspace"></p></a>
+	</div>
+
+
+
+	<div class="button-bar row">
+	  <a class="button button-outline button-calm my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="a_digit('1')"><p>1</p></a>
+	  <a class="button button-outline button-calm my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="a_digit('2')"><p>2</p></a>
+	  <a class="button button-outline button-calm my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="a_digit('3')"><p>3</p></a>
+	  <a class="button button-assertive my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" id="button_+" ng-click="a_digit('+')"><p>+</p></a>
+	</div>
+
+
+	<div class="button-bar row">
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="a_digit('4')"><p>4</p></a>
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;"
+	  ng-click="a_digit('5')"><p>5</p></a>
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;"
+	  ng-click="a_digit('6')"><p>6</p></a>
+	  <a class="button button-calm my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" id="button_-" ng-click="a_digit('-')"><p>-</p></a>
+	</div>
+
+
+	<div class="button-bar row">
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;"ng-click="a_digit('7')"><p>7</p></a>
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;"
+	  ng-click="a_digit('8')"><p>8</p></a>
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;"
+	  ng-click="a_digit('9')"><p>9</p></a>
+	  <a class="button button-royal my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" id="button_*" ng-click="a_digit('*')"><p>*</p></a>
+	</div>
+
+
+	<div class="button-bar row">
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="a_digit('0')"><p>0</p></a>
+	  <a class="button button-outline button-calm  my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;"
+	  ng-click="a_digit('.')"><p>.</p></a>
+	  <a class="button button-positive my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" ng-click="eval_str()"><p>=</p></a>
+	  <a class="button button-energized my_button" style="border-width:0px;display:-webkit-box;-webkit-box pack:center;-webkit-box-align:center;" id="button_/" ng-click="a_digit('/')"><p>/</p></a>
+	</div>
   </ion-content>
 </ion-view>
