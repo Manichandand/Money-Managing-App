@@ -1,0 +1,49 @@
+<ion-view view-title='Add Account'>
+  <ion-content>
+  	<div class="list list-inset">
+        <div class="item item-divider remove_border">
+          Account Name
+        </div>
+        <label class="item item-input remove_border">
+          <input type="text" placeholder="Acc Name" id="acc_name">
+        </label>
+        <div class="item item-divider remove_border">
+          Account Number
+        </div>
+        <label class="item item-input remove_border" >
+          <input type="text" placeholder="Acc Number" id="acc_number">
+        </label>
+        <div class="item item-divider remove_border">
+          Balance
+        </div>
+        <label class="item item-input remove_border">
+          <input type="text" placeholder="Balance" id="acc_balance">
+        </label>
+        <!--label class="item item-input item-select">
+          <div class="input-label">
+            Lightsaber
+          </div>
+          <select>
+            <option ng-repeat="catagorie in catagories">{{catagorie}}</option>
+          </select>
+        </label-->
+        <!--div class="item item-divider remove_border">
+          Select Catagorie
+        </div>
+        <label class="item item-radio" ng-repeat="catagorie in catagories">
+          <input type="radio" name="group">
+          <div class="item-content">
+            {{catagorie.name}}
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label-->
+        <div class="row">
+        	<button class="col col-20 col-offset-80 button button-light button-balanced" ng-click="add_account()">Add</button>
+        </div>
+
+
+
+    </div>
+  
+  </ion-content>
+ </ion-view>

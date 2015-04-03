@@ -1,0 +1,11 @@
+<ion-view view-title='Delete Account' cache-view='false'>
+  <ion-content  class="padding" style="background-color:#E0E0E0">
+  	<div style="border:1px solid #E0E0E0;border-radius:5px;margin-top:2px;height:66px;margin-bottom:5px;background-color:#ffffff" id="div_mine" ng-repeat="acc in accounts" on-swipe-left="delete_acc(acc.aid,acc.aname,$index)" on-swipe-right="delete_acc(acc.aid,acc.aname,$index)">
+</button>
+       <div style="width:50px;height:50px;background-color:{{acc.bg}};margin-top:8px;margin-left:8px;margin-bottom:8px;margin-right:8px;color:white;text-align:center;font-size:36px;display:block;vertical-align:middle;line-height: 50px;border-radius:50%;">{{acc.aname[0]}}</div>
+       <h5 style="position:relative;top:-70px;padding-left:98px;padding-top:8px;">Acc Name   : {{acc.aname}}</h5>
+       <h6 style="position:relative;padding-left:98px;top:-80px;color:#707070;">Acc Number : {{acc.ac_number}}</h6>
+       <h6 style="position:relative;padding-left:98px;top:-90px;color:#909090;">Acc Balance : {{acc.balance}}</h6>
+    </div>
+  </ion-content>
+</ion-view>

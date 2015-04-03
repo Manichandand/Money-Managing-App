@@ -1,0 +1,31 @@
+<ion-view view-title='Money Manager' cache-view='false'>
+  <ion-content class="padding" style="background-color:#E0E0E0">
+  	<!--div class="card" ng-repeat = "acc in accounts">
+	  	<svg width="70" height="70">
+  			<rect width="65" height="65" style="fill:#336633;stroke-width:0;" />
+		</svg>
+	    <div style="padding-left:75px;float:right;">{{acc.aname}}</div>
+	    <div style="padding-left:75px;">{{acc.ac_number}}</div>
+	    <div style="padding-left:75px;">{{acc.balance}}</div>
+	  </div>
+	</div-->
+	<!--div class="list" ng-repeat="acc in accounts">
+	    <a class="item item-thumbnail-left">
+	   	  <img src="img/{{acc.bg}}.jpg"/>
+	      <h2>Acc Name  : {{acc.aname}}</h2>
+	      <p>Acc Number:{{acc.ac_number}}</p>
+	      <p>Balance   :{{acc.balance}}</p>
+	    </a>
+	</div-->
+	<div  ng-repeat="acc in accounts"style="border:1px solid #E0E0E0;border-radius:5px;margin-top:2px;height:66px;margin-bottom:5px;background-color:#ffffff; border-top-color:{{acc.bg}};border-top-right-radius:0px;border-top-left-radius:0px;border-top-width:2px;" id="div_mine">
+		<!--button class="button-clear button-positive icon ion-ios-minus-outline"style="position:relative;right:0px;top:0px;min-width:10px;min-height:10px;height:20px;float:right;color:#ff00ff" id="button_minus"></button-->
+		<a href="#/tab/acc/{{acc.aid}}" style="text-decoration:none;">
+			<div style="width:50px;height:50px;background-color:{{acc.bg}};margin-top:8px;margin-left:8px;margin-bottom:8px;margin-right:8px;color:white;text-align:center;font-size:36px;display:block;vertical-align:middle;line-height: 50px;border-radius:50%;">{{acc.aname[0]}}</div>
+	       <h5 style="position:relative;top:-70px;padding-left:98px;padding-top:8px;">Acc Name   : {{acc.aname}}</h5>
+	       <h6 style="position:relative;padding-left:98px;top:-80px;color:#707070;">Acc Number : {{acc.ac_number}}</h6>
+	       <h6 style="position:relative;padding-left:98px;top:-90px;color:#909090;">Acc Balance : {{acc.balance}}</h6>
+		</a>
+    </div>
+  </ion-content>
+  <button class="button button-assertive icon ion-ios-compose-outline round" onClick="location.href='#/tab/add_account'"></button>
+</ion-view>
