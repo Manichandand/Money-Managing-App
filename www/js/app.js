@@ -193,6 +193,24 @@ var example = angular.module('starter', ['ionic', 'starter.controllers', 'starte
         }
       }
     })
+  .state('tab.query', {
+      url: '/query',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/query.html',
+          controller: 'queryCtrl'
+        }
+      }
+    })
+  .state('tab.show_results', {
+      url: '/show_results',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/show_results.html',
+          controller: 'showResultsCtrl'
+        }
+      }
+    })
   .state('g', {
       url: '/g',
           templateUrl: 'templates/g.html',

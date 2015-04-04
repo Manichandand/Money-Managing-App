@@ -16,6 +16,17 @@
 	    padding-left:15px;
 	    padding-top: 2px;
 }
+.round_next{
+	    position:fixed;
+	    height:50px;
+	    width:50px;
+	    border-radius: 50%;
+	    text-align: center;
+	    bottom: 5%;
+	    left:5%;
+	    padding-left:12px;
+	    padding-top: 4px;
+}
 .remove_border{
 	border-color: #eff4ff;
 }

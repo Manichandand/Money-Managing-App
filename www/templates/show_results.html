@@ -1,13 +1,37 @@
 <ion-view cache-view='false' style="background-color:#E0E0E0;">
 <ion-nav-title>{{t}}</ion-nav-title>
   <ion-content style="position:relative;top:163px;">
-    <!--div ng-repeat = "z in ent">
-    	{{z.amount}}
-    	{{z.date}}
-    	{{z.time}}
-    	{{z.cat}}
-    	{{z.des}}
-    </div-->
+  
+  <div class="card">
+    <div class="item item-divider">
+      <p style="display:inline;">From : {{arr[0]}}</p>
+      <p style="float:right;display:inline;">To : {{arr[1]}}</p>
+    </div>
+    <div class="item item-text-wrap">
+      <canvas id="dou"></canvas>
+    </div>
+    <div class="item item-divider">
+      <p style="display:inline;">Doughnut Graph</p>
+      <p style="float:right;display:inline;">Total Spent : {{total_spent}} RS</p>
+    </div>
+  </div>
+  <!-- Dougnet graph -->
+  <!-- Graph radar -->
+    <div class="card">
+    <div class="item item-divider">
+      <p style="display:inline;">From : {{arr[0]}}</p>
+      <p style="float:right;display:inline;">To : {{arr[1]}}</p>
+    </div>
+    <div class="item item-text-wrap">
+      <canvas id="buyers"></canvas>
+    </div>
+    <div class="item item-divider">
+      <p style="display:inline;">Radar Graph</p>
+      <p style="float:right;display:inline;">Total Spent : {{total_spent}} RS</p>
+    </div>
+  </div>
+  <!-- upto here -->
+
     <div class="card" ng-repeat="z in ent| orderBy:['-date','-time']">
 	  <div class="item item-divider">
 	    <p style="display:inline;">Date:{{z.date}}</p>
@@ -27,9 +51,5 @@
        <h5 style="position:relative;top:-70px;padding-left:98px;padding-top:8px;">Acc Name   : {{x.aname}}</h5>
        <h6 style="position:relative;padding-left:98px;top:-80px;color:#707070;">Acc Number : {{x.ac_number}}</h6>
        <h6 style="position:relative;padding-left:98px;top:-90px;color:#909090;">Acc Balance : {{x.balance}}</h6>
-    </div>
-    <div ng-repeat="x in acc">
-    	<button class="button button-assertive icon ion-edit round" ng-click=" add_details(x.aname)"></button>
-    	<button class="button button-assertive icon ion-ios-search-strong round_next" ng-click="query(x.aname)"></button>
     </div>
 </ion-view>
