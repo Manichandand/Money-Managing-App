@@ -1,0 +1,29 @@
+<ion-view view-title='{{t}}' cache-view='false'>
+  <ion-content  class="padding" style="background-color:#E0E0E0">
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">From</span>
+    <input type="Date" id="from">
+  </label>
+</div>
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">To</span>
+    <input type="Date" id="to">
+  </label>
+</div>
+<div class="list">
+  <label class="item item-input item-select">
+    <div class="input-label">
+      category
+    </div>
+    <select id="myselect">
+      <option>All</option>
+      <option ng-repeat="k in cat">{{k.name}}</option>
+    </select>
+  </label>
+
+</div>
+<button class="ol col-50 col-offset-50 button button-outline button-positive" style="background-color:#ffffff;float:right" ng-click="search_exp()">search</button>
+  </ion-content>
+</ion-view>

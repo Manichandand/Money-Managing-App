@@ -7,8 +7,12 @@
 // 'starter.controllers' is found in controllers.js
 var db;
 var kk=0;
+var temp = 0;
 var example = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
-.run(function($ionicPlatform,$cordovaSQLite,$location,$rootScope,$ionicHistory) {
+.run(function($ionicPlatform,$cordovaSQLite,$location,$rootScope,$ionicHistory,$cordovaSplashscreen) {
+    setTimeout(function() {
+      $cordovaSplashScreen.hide()
+    }, 50000)
   /*$ionicPlatform.ready(function() {
     //alert($cordovaSQLite);
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -175,6 +179,15 @@ var example = angular.module('starter', ['ionic', 'starter.controllers', 'starte
         }
       }
     })
+  .state('enter_pin', {
+      url: '/enter_pin',
+      /*views:{
+        'tab-friends':{*/
+            templateUrl: 'templates/enter_pin.html',
+            controller: 'enterPinCtrl'
+         // }
+      //}
+    })
   .state('tab.acc-detail', {
       url: '/acc/:aid',
       views: {
@@ -190,6 +203,24 @@ var example = angular.module('starter', ['ionic', 'starter.controllers', 'starte
         'tab-dash': {
           templateUrl: 'templates/add_exp.html',
           controller: 'expDetailCtrl'
+        }
+      }
+    })
+  .state('tab.query', {
+      url: '/query',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/query.html',
+          controller: 'queryCtrl'
+        }
+      }
+    })
+  .state('tab.show_results', {
+      url: '/show_results',
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/show_results.html',
+          controller: 'showResultsCtrl'
         }
       }
     })
@@ -211,7 +242,7 @@ var example = angular.module('starter', ['ionic', 'starter.controllers', 'starte
   
   
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('enter_pin');
 
 });
 /*function init(){
@@ -230,8 +261,9 @@ ionic.Platform.ready(function() {
         //alert('FUCK U');
         angular.bootstrap(document.body, ['starter']);
 });
-example.controller('MyCtrl', function($scope,$cordovaSQLite) {
+example.controller('MyCtrl', function($scope,$cordovaSQLite,$cordovaSplashscreen) {
     //alert('RUNNING BODY..');
+    $cordovaSplashscreen.show();
     db = $cordovaSQLite.openDB({name : "my_mm.db"});
     //alert('Initlize '+db);
     //db = $cordovaSQLite.openDB({name : "my_mm.db"});
@@ -241,7 +273,7 @@ example.controller('MyCtrl', function($scope,$cordovaSQLite) {
         //alert(res.rows.length);
         if(angular.equals(res.rows.length,0)){
             var query = "INSERT INTO PIN (pid,pin) VALUES (?,?)";
-            $cordovaSQLite.execute(db,query,[1,"1234"]);
+            $cordovaSQLite.execute(db,query,[1,"2401"]);
         }
     });
     $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS CAT (cid integer primary key , cat text)").then(function(res){
@@ -271,6 +303,14 @@ example.controller('MyCtrl', function($scope,$cordovaSQLite) {
     //$cordovaSQLite.execute(db,"DROP TABLE IF EXISTS ENT");
     $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS ENT (eid integer primary key AUTOINCREMENT,acc_name text NOT NULL,amount double NOT NULL,date text NOT NULL,time text NOT NULL,des text,cat text NOT NULL)").then(function(res){
         //alert('TABLE ENT');
+    });
+    $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS FIRST (fid integer primary key,show text)");
+    $cordovaSQLite.execute(db,"select * from FIRST").then(function(res){
+        if(res.rows.length ===0){
+          var query = "INSERT INTO FIRST (fid,show) VALUES (?,?)";
+            $cordovaSQLite.execute(db,query,[1,"true"]);
+            //alert('Teri phen di');
+        }
     });
     //$cordovaSQLite.execute(db,"DROP TABLE IF EXISTS ACC");;
 });

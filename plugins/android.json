@@ -29,6 +29,10 @@
                         {
                             "xml": "<feature name=\"DatePickerPlugin\"><param name=\"android-package\" value=\"com.plugin.datepicker.DatePickerPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -43,6 +47,9 @@
             "PACKAGE_NAME": "com.ionicframework.tab649381"
         },
         "com.plugin.datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.tab649381"
+        },
+        "org.apache.cordova.splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.tab649381"
         }
     },

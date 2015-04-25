@@ -1,16 +1,16 @@
 var acc_global_name;
+var global_from;
+var global_to;
+var global_cat;
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope,$cordovaSQLite) {
-
-})
-
 .controller('ChatsCtrl', function($scope) {
-  document.getElementById('button_c').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_+').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_-').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_*').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_/').style.height = (screen.height-245)/5+'px';
+  document.getElementById('bar1').style.height = '10%';
+  document.getElementById('bar2').style.height = '10%';
+  document.getElementById('bar3').style.height = '10%';
+  document.getElementById('bar4').style.height = '10%';
+  document.getElementById('bar5').style.height = '10%';
+  //document.getElementById('bar5').style.bottom = 0+'vh';
   $scope.str = '';
   $scope.answer = '';
   $scope.clear_str = function(){
@@ -58,9 +58,17 @@ angular.module('starter.controllers', [])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
-.controller('showCtrl', function($scope,$cordovaSQLite,$cordovaToast) {
+.controller('showCtrl', function($scope,$cordovaSQLite,$cordovaToast,$ionicHistory,$ionicNavBarDelegate) {
   //alert(db);
-  
+  if(temp === 0){
+    $scope.ret = true;
+    temp = 1;
+  }
+  else{
+    $scope.ret = false;
+  }
+  //$ionicHistory.clearHistory();
+  //$ionicNavBarDelegate.showBackButton(false);
   //document.getElementById('button_minus').style.marginLeft = (x-20)+'px';
   $scope.accounts = [];
   $cordovaSQLite.execute(db,"SELECT * FROM ACC",[]).then(function(res){
@@ -149,7 +157,7 @@ angular.module('starter.controllers', [])
           //alert(res.rows.length);
           if(old_pin != res.rows.item(0).pin){
             //alert("Invelid Old PIN");
-            $cordovaToast.showShortBottom('Invelid Old PIN');
+            $cordovaToast.showShortBottom('Invalid Old PIN');
           }
           else{
             var query = "UPDATE PIN SET pin = ? WHERE pid=1";
@@ -192,7 +200,7 @@ angular.module('starter.controllers', [])
       }
   });
   $scope.onSwipeLeft  = function(){
-    alert("Swipe Left");
+    //alert("Swipe Left");
   }
   $scope.delete_cat = function(item,index){
     //alert(item);
@@ -210,7 +218,7 @@ angular.module('starter.controllers', [])
     var acc_name = document.getElementById('acc_name').value;
     var acc_number = document.getElementById('acc_number').value;
     var acc_balance = document.getElementById('acc_balance').value;
-    alert(acc_name+" "+acc_number+" "+acc_balance);
+    //alert(acc_name+" "+acc_number+" "+acc_balance);
     var query = "INSERT INTO ACC(name,acnumber,balance) VALUES(?,?,?)";
     var check_name = false;
     $cordovaSQLite.execute(db,"SELECT count(*) as total FROM ACC WHERE name=?",[acc_name]).then(function(res){
@@ -245,7 +253,7 @@ angular.module('starter.controllers', [])
   }
 })
 .controller('deleteAccountCtrl', function($scope,$cordovaSQLite) {
-  alert(db);
+  //alert(db);
 })
 .controller('recoverAccountCtrl', function($scope,$cordovaSQLite) {
   $scope.accountD = [];
@@ -319,6 +327,10 @@ angular.module('starter.controllers', [])
     acc_global_name = account_name;
     window.location.replace('#/tab/add_exp');
   }
+  $scope.query = function(account_name){
+    acc_global_name = account_name;
+    window.location.replace('#/tab/query');
+  }
 })
 //All the expense related thing go here.
 .controller('expDetailCtrl', function($scope,$cordovaSQLite) {
@@ -333,8 +345,9 @@ angular.module('starter.controllers', [])
     }
   });
   $scope.add_exp = function(){
-    alert('Working');
+    //alert('Working');
     var flag = true;
+    var bal = 0.00;
     var amount = document.getElementById('amount').value;
     //alert(amount);
     var date = document.getElementById('date').value;
@@ -348,12 +361,158 @@ angular.module('starter.controllers', [])
     var time = document.getElementById('time').value;
     //alert(time);
     //upto this give be dec and flag
+    var put;
     if(flag){
       $cordovaSQLite.execute(db,"INSERT INTO ENT(acc_name,amount,date,time,des,cat) VALUES (?,?,?,?,?,?)",[acc_global_name,amount,date,time,des,cat]).then(function(res){
           //alert('INSERTED......');
+      });
+      $cordovaSQLite.execute(db,"SELECT balance from ACC WHERE name = ?",[acc_global_name]).then(function(res){
+        bal = res.rows.item(0).balance;
+        //alert("Balance is "+ res.rows.item(0).balance);
+        //alert('AMOUNT'+amount);
+        put = eval(bal-amount);
+        //alert("NEW BALANCE "+);
+        //alert(put);
+        $cordovaSQLite.execute(db,"UPDATE ACC SET balance=? WHERE name = ?",[put,acc_global_name]);
       });
     }
   }
 })
 .controller('tutCtrl', function($scope) {
+})
+.controller('queryCtrl', function($scope,$cordovaSQLite) {
+  //alert('In query');
+  //alert('in '+acc_global_name);
+  $scope.cat = [];
+  var i =0;
+  $cordovaSQLite.execute(db,"SELECT * FROM CAT",[]).then(function(res){
+    //alert(res.rows.length);
+    while(i < res.rows.length){
+      $scope.cat.push({name: res.rows.item(i).cat});
+      i++;
+    }
+  });
+  $scope.t = acc_global_name;
+  var flag = true;
+  $scope.search_exp = function(){
+    //alert('search exp');
+    global_from = document.getElementById('from').value;
+    global_to= document.getElementById('to').value;
+    var select = document.getElementById("myselect");
+    var index = select.selectedIndex;
+    global_cat = select.options[index].text;
+    //alert(global_from +" "+global_to+" "+global_cat);
+    window.location.replace('#/tab/show_results');
+  }
+})
+.controller('showResultsCtrl', function($scope,$cordovaSQLite) {
+  $scope.t = acc_global_name;
+  $scope.acc = [];
+  $scope.ent = [];
+  var size;
+  var random_num;
+  var i =0;
+  $scope.arr = [global_from,global_to];
+  $scope.colors = ['#99cc33','#009900','#ffcc00','#336633','#ff0099','#990099','#6633cc','#cc6633','#333333','#cc9933','#009999','#3399ff','#336699','#cc3333'];
+  $cordovaSQLite.execute(db,"SELECT * FROM ACC WHERE name=?",[acc_global_name]).then(function(res){
+      //alert('IN IT');
+      //alert(res.rows.length);
+      random_num = res.rows.item(0).aid%14;
+      $scope.acc.push({aid: res.rows.item(0).aid,aname:res.rows.item(0).name,ac_number:res.rows.item(0).acnumber,display:res.rows.item(0).display,balance:res.rows.item(0).balance,bg:$scope.colors[random_num]});
+      //alert(res.rows.item(0).name);
+  });
+  if(global_cat === 'All'){
+    $cordovaSQLite.execute(db,"SELECT * FROM ENT WHERE date <= ? AND date >= ?",[global_to,global_from]).then(function(res){
+        while(i < res.rows.length){
+        //alert(res.rows.item(i).eid);
+        $scope.ent.push({amount:res.rows.item(i).amount,date:res.rows.item(i).date,time:res.rows.item(i).time,des:res.rows.item(i).des,cat:res.rows.item(i).cat});
+        i++;
+      }
+    });
+  }
+  if(global_cat != 'All'){
+    $cordovaSQLite.execute(db,"SELECT * FROM ENT WHERE date <= ? AND date >= ? AND cat = ?",[global_to,global_from,global_cat]).then(function(res){
+        while(i < res.rows.length){
+        //alert(res.rows.item(i).eid);
+        $scope.ent.push({amount:res.rows.item(i).amount,date:res.rows.item(i).date,time:res.rows.item(i).time,des:res.rows.item(i).des,cat:res.rows.item(i).cat});
+        i++;
+      }
+    });
+  }
+  var data_dou = [];
+  var data = {
+    labels: [],
+    datasets: [
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: []
+        }
+    ]
+};
+var pieOptions = {
+  segmentShowStroke : false,
+  animateScale : true
+}
+  var buyers = document.getElementById('buyers').getContext('2d');
+  var myRadarChart = new Chart(buyers).Radar(data, pieOptions);
+  var dou = document.getElementById('dou').getContext('2d');
+  var newc = new Chart(dou).Doughnut(data_dou, {
+    animateScale: true
+  });
+  /*myRadarChart.addData([100], "");
+  myRadarChart.addData([60], "Dancing");
+  myRadarChart.addData([35], "Running");
+  myRadarChart.addData([70], "Global");*/
+  var j =0;
+  var k = 0;
+  var cat = [];
+  var spent = [];
+  var search_cat;
+  var spent_cat;
+  $scope.total_spent = 0.00;
+  $cordovaSQLite.execute(db,"SELECT sum(amount) as s FROM ENT where date >= ? AND date <= ?",[global_from,global_to]).then(function(res){
+      myRadarChart.addData([res.rows.item(0).s],"Total");
+  });
+  $cordovaSQLite.execute(db,"select c.cat as k,sum(i.amount) as s from CAT c left outer join ENT i on i.cat=c.cat and i.date >= ? and i.date <= ?group by c.cat",[global_from,global_to]).then(function(res){
+      while(j<res.rows.length){
+        myRadarChart.addData([res.rows.item(j).s],res.rows.item(j).k);
+        $scope.total_spent +=res.rows.item(j).s;
+        newc.addData({
+            value: res.rows.item(j).s,
+            color: '#'+(Math.random()*0xFFFFFF<<0).toString(16),
+            highlight: "#C69CBE",
+            label: res.rows.item(j).k
+        });
+        j++;
+      }
+  });
+})
+.controller('enterPinCtrl', function($scope,$cordovaSQLite,$cordovaToast) {
+  $scope.pin_curr = '2401';
+  $cordovaSQLite.execute(db,"SELECT * FROM FIRST").then(function(res){
+      $scope.s = res.rows.item(0).show;
+      //alert($scope.s);
+    var query = "UPDATE FIRST SET show = ? WHERE fid=1";
+    $cordovaSQLite.execute(db,query,["false"]).then(function(res){
+    });
+  });
+  $scope.login = function(){
+    var pin = document.getElementById('pin').value;
+    $cordovaSQLite.execute(db,"SELECT pin from PIN where pid = 1").then(function(res){
+      //alert(res.rows.item(0).pin+" "+pin);
+      if(res.rows.item(0).pin === pin.toString()){
+        //alert('correct pin');
+        window.location.replace('#/tab/dash');
+      }
+      else{
+        $cordovaToast.showShortBottom('Invalid pin');
+      }
+    })
+  }
 });

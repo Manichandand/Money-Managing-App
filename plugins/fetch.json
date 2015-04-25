@@ -5,5 +5,11 @@
             "url": "http://github.com/VitaliiBlagodir/cordova-plugin-datepicker",
             "subdir": "."
         }
+    },
+    "org.apache.cordova.splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.splashscreen"
+        }
     }
 }

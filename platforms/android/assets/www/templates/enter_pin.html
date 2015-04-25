@@ -1,0 +1,14 @@
+<ion-view view-title='ENTER PIN' cache-view='false'>
+  <ion-content  class="padding" style="background-color:#E0E0E0">
+    <div class="list">
+    <p ng-show="!s">Your current password is: {{pin_curr}}</p>
+      <label class="item item-input">
+        <span class="input-label">PIN</span>
+        <input type="number" id="pin">
+      </label>
+    </div>
+    <div class="row">
+    	<button class="col col-33 col-offset-67 button button-outline button-positive" ng-click="login()" style="background:#ffffff;position:relative;top:-15px;">Login</button>
+    </div>
+  </ion-content>
+</ion-view>
