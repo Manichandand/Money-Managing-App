@@ -1,19 +1,19 @@
-<ion-view view-title='Change PIN'>
-  <ion-content class="bg">
+<ion-view view-title='Change PIN' style="background-color:#E0E0E0">
+  <ion-content class="bg" style="background-color:#E0E0E0">
   	<div class="list list-inset">
-        <div class="item item-divider">
+        <div class="item item-divider" style="background-color:#E0E0E0;border-color:#E0E0E0;">
             Old Pin
         </div>
         <label class="item item-input">
-          <input type="text" placeholder="Old PIN" id="old_pin">
+          <input type="number" placeholder="Old PIN" id="old_pin">
         </label>
-        <div class="item item-divider">
+        <div class="item item-divider" style="background-color:#E0E0E0;border-color:#E0E0E0;">
               New Pin
         </div>
         <label class="item item-input">
-          <input type="text" placeholder="New PIN" id="new_pin">
+          <input type="number" placeholder="New PIN" id="new_pin">
         </label>
-        <div class="row bg">
+        <div class="row" style="background-color:#E0E0E0">
         	<button class="col col-33 col-offset-67 button button-positive icon ion-edit" ng-click="change_pass()"></button>
         </div>
     </div>

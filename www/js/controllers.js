@@ -4,16 +4,13 @@ var global_to;
 var global_cat;
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope,$cordovaSQLite) {
-
-})
-
 .controller('ChatsCtrl', function($scope) {
-  document.getElementById('button_c').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_+').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_-').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_*').style.height = (screen.height-245)/5+'px';
-  document.getElementById('button_/').style.height = (screen.height-245)/5+'px';
+  document.getElementById('bar1').style.height = '10%';
+  document.getElementById('bar2').style.height = '10%';
+  document.getElementById('bar3').style.height = '10%';
+  document.getElementById('bar4').style.height = '10%';
+  document.getElementById('bar5').style.height = '10%';
+  //document.getElementById('bar5').style.bottom = 0+'vh';
   $scope.str = '';
   $scope.answer = '';
   $scope.clear_str = function(){
@@ -61,9 +58,17 @@ angular.module('starter.controllers', [])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
-.controller('showCtrl', function($scope,$cordovaSQLite,$cordovaToast) {
+.controller('showCtrl', function($scope,$cordovaSQLite,$cordovaToast,$ionicHistory,$ionicNavBarDelegate) {
   //alert(db);
-  
+  if(temp === 0){
+    $scope.ret = true;
+    temp = 1;
+  }
+  else{
+    $scope.ret = false;
+  }
+  //$ionicHistory.clearHistory();
+  //$ionicNavBarDelegate.showBackButton(false);
   //document.getElementById('button_minus').style.marginLeft = (x-20)+'px';
   $scope.accounts = [];
   $cordovaSQLite.execute(db,"SELECT * FROM ACC",[]).then(function(res){
@@ -152,7 +157,7 @@ angular.module('starter.controllers', [])
           //alert(res.rows.length);
           if(old_pin != res.rows.item(0).pin){
             //alert("Invelid Old PIN");
-            $cordovaToast.showShortBottom('Invelid Old PIN');
+            $cordovaToast.showShortBottom('Invalid Old PIN');
           }
           else{
             var query = "UPDATE PIN SET pin = ? WHERE pid=1";
@@ -340,7 +345,7 @@ angular.module('starter.controllers', [])
     }
   });
   $scope.add_exp = function(){
-    alert('Working');
+    //alert('Working');
     var flag = true;
     var bal = 0.00;
     var amount = document.getElementById('amount').value;
@@ -356,14 +361,19 @@ angular.module('starter.controllers', [])
     var time = document.getElementById('time').value;
     //alert(time);
     //upto this give be dec and flag
+    var put;
     if(flag){
       $cordovaSQLite.execute(db,"INSERT INTO ENT(acc_name,amount,date,time,des,cat) VALUES (?,?,?,?,?,?)",[acc_global_name,amount,date,time,des,cat]).then(function(res){
           //alert('INSERTED......');
       });
       $cordovaSQLite.execute(db,"SELECT balance from ACC WHERE name = ?",[acc_global_name]).then(function(res){
-        //alert("Balance is "+ res.rows.item(0).balance);
         bal = res.rows.item(0).balance;
-        $cordovaSQLite.execute(db,"UPDATE ACC SET balance=? WHERE name = ?",[bal-amount,acc_global_name]);
+        //alert("Balance is "+ res.rows.item(0).balance);
+        //alert('AMOUNT'+amount);
+        put = eval(bal-amount);
+        //alert("NEW BALANCE "+);
+        //alert(put);
+        $cordovaSQLite.execute(db,"UPDATE ACC SET balance=? WHERE name = ?",[put,acc_global_name]);
       });
     }
   }
@@ -391,7 +401,7 @@ angular.module('starter.controllers', [])
     var select = document.getElementById("myselect");
     var index = select.selectedIndex;
     global_cat = select.options[index].text;
-    alert(global_from +" "+global_to+" "+global_cat);
+    //alert(global_from +" "+global_to+" "+global_cat);
     window.location.replace('#/tab/show_results');
   }
 })
@@ -482,4 +492,27 @@ var pieOptions = {
         j++;
       }
   });
+})
+.controller('enterPinCtrl', function($scope,$cordovaSQLite,$cordovaToast) {
+  $scope.pin_curr = '2401';
+  $cordovaSQLite.execute(db,"SELECT * FROM FIRST").then(function(res){
+      $scope.s = res.rows.item(0).show;
+      //alert($scope.s);
+    var query = "UPDATE FIRST SET show = ? WHERE fid=1";
+    $cordovaSQLite.execute(db,query,["false"]).then(function(res){
+    });
+  });
+  $scope.login = function(){
+    var pin = document.getElementById('pin').value;
+    $cordovaSQLite.execute(db,"SELECT pin from PIN where pid = 1").then(function(res){
+      //alert(res.rows.item(0).pin+" "+pin);
+      if(res.rows.item(0).pin === pin.toString()){
+        //alert('correct pin');
+        window.location.replace('#/tab/dash');
+      }
+      else{
+        $cordovaToast.showShortBottom('Invalid pin');
+      }
+    })
+  }
 });
